@@ -22,6 +22,7 @@ export type TLocalGuardian = {
 };
 export type TStudent = {
   id: string;
+  password: string;
   name: TUserName;
   gender: 'male' | 'female';
   DateOfBirth?: string;
@@ -35,19 +36,23 @@ export type TStudent = {
   localGuardian: TLocalGuardian;
   profileImage?: string;
   activeStatus: 'active' | 'inactive';
+  isDeleted: boolean;
 };
 
-export type StudentMethods = {
-  isUserExist(id: string): Promise<TStudent | null>;
-};
+//for creating static method
 
-//step 1 ---> custom instance  method er jonne akta model type toiri korbo
-// step 2-> sei model a parameter hobe 1. main model er type 2. empty object 3.instance method er type
-//step 3--> then main model schema te 1. main model er type 2.custom method er schema 3.instance method er type
-//step-4 -->then main model the custom method er type use kore method toiri korte hobe
+export interface StudentModel extends Model<TStudent> {
+  isUserExists(id: string): Promise<TStudent | null>;
+}
 
-export type StudentModel = Model<
-  TStudent,
-  Record<string, never>,
-  StudentMethods
->;
+// create a instance custom method
+
+// export type StudentMethods = {
+//   isUserExist(id: string): Promise<TStudent | null>;
+// };
+
+// export type StudentModel = Model<
+//   TStudent,
+//   Record<string, never>,
+//   StudentMethods
+// >;
