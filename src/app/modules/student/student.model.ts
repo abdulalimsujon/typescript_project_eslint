@@ -53,8 +53,14 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     id: { type: String, unique: true },
     password: {
       type: String,
-      required: [true, 'password is required'],
-      maxlength: [20, 'not more than 20 characters'],
+      // required: [true, 'password is required'],
+      // maxlength: [20, 'not more than 20 characters'],
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'userId is required'],
+      unique: true,
+      ref: 'User',
     },
 
     name: {
@@ -98,7 +104,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: true,
     },
     profileImage: { type: String },
-    activeStatus: { type: String, required: true },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -128,16 +133,16 @@ studentSchema.statics.isUserExists = async function (id: string) {
 
 // -----------------pre save middleware:hooks-------------------------------->
 
-studentSchema.pre('save', async function (next) {
-  // console.log(this, 'pre hook we save our data');
+// studentSchema.pre('save', async function (next) {
+//   // console.log(this, 'pre hook we save our data');
 
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this;
+//   // eslint-disable-next-line @typescript-eslint/no-this-alias
+//   const user = this;
 
-  user.password = await bcrypt.hash(user.password, 10);
+//   user.password = await bcrypt.hash(user.password, 10);
 
-  next();
-});
+//   next();
+// });
 
 //----------------virtual------------------------------------------------------>
 
