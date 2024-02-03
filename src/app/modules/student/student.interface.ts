@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { Types } from 'mongoose';
 import { Date, Model } from 'mongoose';
 
 export type TGuardian = {
@@ -23,7 +24,7 @@ export type TLocalGuardian = {
 };
 export type TStudent = {
   id: string;
-  //user: Types.ObjectId;
+  user: Types.ObjectId;
   password: string;
   name: TUserName;
   gender: 'male' | 'female' | 'other';
@@ -38,6 +39,7 @@ export type TStudent = {
   isDeleted?: boolean;
   localGuardian: TLocalGuardian;
   profileImage?: string;
+  admissionSemester: Types.ObjectId;
 };
 
 //for creating static method

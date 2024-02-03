@@ -33,15 +33,14 @@ const localGuardianZodSchema = z.object({
   address: z.string(),
   contract: z.string(),
 });
-
 // Define Zod schema for the main Student model
 export const studentZodSchema = z.object({
   password: z.string().max(20),
-  body: z.object({
+  student: z.object({
     id: z.string(),
     name: userNameZodSchema,
     gender: z.enum(['male', 'female', 'other']),
-    DateOfBirth: z.date().optional(),
+    DateOfBirth: z.string().optional(),
     email: z.string().email({ message: 'Invalid email format' }),
     contractNo: z.string(),
     emergencyContractNumber: z.string(),
@@ -49,6 +48,7 @@ export const studentZodSchema = z.object({
       .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
       .optional(),
     presentAddress: z.string(),
+    admissionSemester: z.string(),
     permanentAddress: z.string(),
     guardian: guardianZodSchema,
     localGuardian: localGuardianZodSchema,

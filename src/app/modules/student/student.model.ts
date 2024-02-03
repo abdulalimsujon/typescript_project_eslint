@@ -55,12 +55,12 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       // required: [true, 'password is required'],
       // maxlength: [20, 'not more than 20 characters'],
     },
-    // user: {
-    //   type: Schema.Types.ObjectId,
-    //   required: [true, 'userId is required'],
-    //   unique: true,
-    //   ref: 'User',
-    // },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'userId is required'],
+      unique: true,
+      ref: 'User',
+    },
 
     name: {
       type: userNameSchema,
@@ -103,6 +103,11 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: true,
     },
     profileImage: { type: String },
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicSemester',
+    },
+
     isDeleted: {
       type: Boolean,
       default: false,
