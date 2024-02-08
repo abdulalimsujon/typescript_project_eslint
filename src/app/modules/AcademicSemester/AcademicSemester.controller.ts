@@ -29,16 +29,14 @@ const AllSemester = catchAsync(async (req, res) => {
 });
 
 const updatedSemster = catchAsync(async (req, res) => {
-  const id = req.params.id;
-  const reqBody = req.body;
-  const result = await AcademicSemesterService.updateAcademicSemester(
-    id,
-    reqBody,
-  );
+  const id = req.params.studentId;
+  const { body } = req.body;
+
+  const result = await AcademicSemesterService.updateAcademicSemester(id, body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'academic semester fetched successfully',
+    message: 'academic semester updated successfully',
     data: result,
   });
 });

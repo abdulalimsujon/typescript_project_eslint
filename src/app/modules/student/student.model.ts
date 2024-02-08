@@ -8,6 +8,8 @@ import {
   TStudent,
   TUserName,
 } from './student.interface';
+import AppError from '../../Errors/AppError';
+import httpStatus from 'http-status';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -61,6 +63,10 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       unique: true,
       ref: 'User',
     },
+    id: {
+      type: String,
+      required: true,
+    },
 
     name: {
       type: userNameSchema,
@@ -106,6 +112,10 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     admissionSemester: {
       type: Schema.Types.ObjectId,
       ref: 'AcademicSemester',
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
     },
 
     isDeleted: {
@@ -165,6 +175,18 @@ studentSchema.pre('find', function (next) {
 });
 studentSchema.pre('findOne', function (next) {
   this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+studentSchema.pre('findOneAndUpdate', async function (next) {
+  const query = this.getQuery();
+  const isSemesterExist = await Student.findOne({
+    id: query,
+  });
+
+  if (!isSemesterExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This user is not exist');
+  }
 
   next();
 });

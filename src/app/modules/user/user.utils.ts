@@ -40,5 +40,7 @@ export const generatedStudentId = async (payload: TAcademicSemester | any) => {
 
   incrementId = `${payload.year}${payload.code}${incrementId}`.toString();
 
+  console.log('increment id', incrementId);
+
   return incrementId;
 };

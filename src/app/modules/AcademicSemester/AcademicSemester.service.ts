@@ -33,19 +33,17 @@ const updateAcademicSemester = async (
   id: string,
   payload: Partial<TAcademicSemester>,
 ) => {
-  const result = await AcademicSemester.updateOne({ _id: id }, [
-    {
-      $set: {
-        name: payload.name,
-        code: payload.code,
-        year: payload.year,
-        startMonth: payload.startMonth,
-        endMonth: payload.endMonth,
-        modified: '$$NOW',
-      },
-    },
-  ]);
+  if (
+    payload.name &&
+    payload.code &&
+    AcademicSemesterTimeWrapper[payload.name] !== payload.code
+  ) {
+    throw new Error('Invalid Semester Code');
+  }
 
+  const result = await AcademicSemester.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
   return result;
 };
 export const AcademicSemesterService = {
