@@ -24,23 +24,11 @@ const getSingleStudent = async (id: string) => {
   return result;
 };
 const updateStudentFromDb = async (id: string, payload: Partial<TStudent>) => {
-  console.log(id);
   const { name, guardian, localGuardian, ...remainingStudentData } = payload;
 
   const modifiedUpdatedData: Record<string, unknown> = {
     ...remainingStudentData,
   };
-
-  /*
-    guardain: {
-      fatherOccupation:"Teacher"
-    }
-
-    guardian.fatherOccupation = Teacher
-
-    name.firstName = 'Mezba'
-    name.lastName = 'Abedin'
-  */
 
   if (name && Object.keys(name).length) {
     for (const [key, value] of Object.entries(name)) {

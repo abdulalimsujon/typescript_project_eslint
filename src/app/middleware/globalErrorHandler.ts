@@ -1,22 +1,62 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { NextFunction, Request, Response } from 'express';
+import {
+  ErrorRequestHandler,
+  NextFunction,
+  Request,
+  RequestHandler,
+  Response,
+} from 'express';
+import { ZodError, ZodIssue } from 'zod';
+import { TErrorSources } from '../interface/error.interface';
+import config from '../config';
+import handleZodError from '../Errors/HandleZodError';
+import handleValidationError from '../Errors/HandleValidationError';
+import handleCastError from '../Errors/HandleCastError';
+import handleDublicateKeyError from '../Errors/handleDuplicateError';
 
-const globalErrorHandler = (
-  error: any,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const statusCode = error.statusCode || 500;
-  const msg = error.message || 'something went wrong';
+const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
+  let statusCode = 500;
+  let message = 'something went wrong';
+
+  let errorSources: TErrorSources = [
+    {
+      path: '',
+      message,
+    },
+  ];
+
+  if (error instanceof ZodError) {
+    const simplifliedError = handleZodError(error);
+    statusCode = simplifliedError?.statusCode;
+    message = simplifliedError?.message;
+    errorSources = simplifliedError?.errorSources;
+  } else if (error?.name === 'ValidationError') {
+    const simplifliedError = handleValidationError(error);
+    statusCode = simplifliedError?.statusCode;
+    message = simplifliedError?.message;
+    errorSources = simplifliedError?.errorSources;
+  } else if (error?.name === 'CastError') {
+    const simplifliedError = handleCastError(error);
+    statusCode = simplifliedError?.statusCode;
+    message = simplifliedError?.message;
+    errorSources = simplifliedError?.errorSources;
+  } else if (error?.code === 11000) {
+    const simplifliedError = handleDublicateKeyError(error);
+    statusCode = simplifliedError?.statusCode;
+    message = simplifliedError?.message;
+    errorSources = simplifliedError?.errorSources;
+  }
 
   return res.status(statusCode).json({
     success: false,
-    message: msg,
-    error: error,
+    message,
+    // error,
+    errorSources,
+    stack: config.NODE_ENV === 'development' ? error.stack : null,
   });
 };
 

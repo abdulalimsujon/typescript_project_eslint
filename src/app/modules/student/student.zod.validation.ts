@@ -67,7 +67,7 @@ const updateLocalGuardianZodSchema = z.object({
 // Define Zod schema for the main Student model
 export const studentZodSchema = z.object({
   password: z.string().max(20),
-  student: z.object({
+  body: z.object({
     id: z.string().optional(),
     name: userNameZodSchema,
     gender: z.enum(['male', 'female', 'other']),
@@ -90,7 +90,8 @@ export const studentZodSchema = z.object({
   }),
 });
 export const updateStudentZodSchema = z.object({
-  student: z.object({
+  body: z.object({
+    id: z.string().optional(),
     name: updateUserNameZodSchema,
     gender: z.enum(['male', 'female', 'other']).optional(),
     DateOfBirth: z.string().optional(),
@@ -103,8 +104,8 @@ export const updateStudentZodSchema = z.object({
     presentAddress: z.string().optional(),
     admissionSemester: z.string().optional(),
     permanentAddress: z.string().optional(),
-    guardian: updateGuardianZodSchema,
-    localGuardian: updateLocalGuardianZodSchema,
+    guardian: updateGuardianZodSchema.optional(),
+    localGuardian: updateLocalGuardianZodSchema.optional(),
     profileImage: z.string().optional(),
     activeStatus: z.string().optional(),
     academicDepartment: z.string().optional(),

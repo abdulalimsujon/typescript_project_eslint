@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.post(
   '/create-academicDepartment',
-  validataRequest(
-    AcademicDepartmentValidation.createAcademicDepartmentValidationSchema,
-  ),
+  // validataRequest(
+  //   AcademicDepartmentValidation.createAcademicDepartmentValidationSchema,
+  // ),
   AcademicDepartmentController.createAcademicDepartment,
 );
 router.get(
