@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import express, { request, response } from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { Application } from 'express';
 import notFound from './app/middleware/notFound';
@@ -16,7 +16,16 @@ app.use(cors());
 
 app.use('/api/v1', router);
 
+const test = async (req: Request, res: Response) => {
+  Promise.reject();
+};
+
+app.get('/', test);
+
 app.use(globalErrorHandler);
 app.use(notFound);
 
 export default app;
+function async(arg0: (req: Request, res: Response) => void) {
+  throw new Error('Function not implemented.');
+}

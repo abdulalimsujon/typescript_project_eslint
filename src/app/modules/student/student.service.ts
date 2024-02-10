@@ -5,8 +5,32 @@ import httpStatus from 'http-status';
 import { User } from '../user/user.model';
 import { TStudent } from './student.interface';
 
-const getAllStudent = async () => {
-  const result = await Student.find({})
+const getAllStudent = async (query: Record<string, unknown>) => {
+  let searchTerm = '';
+
+  const queryObject = { ...query };
+
+  const excludedFields = ['email', 'sort', 'limit'];
+
+  excludedFields.forEach((ele) => delete queryObject[ele]);
+
+  if (query.queryTerm) {
+    searchTerm = query?.queryTerm as string;
+  }
+  const searchAbleQuery = ['email', 'name.firstName', 'presentAddress'];
+  const searchQuery = Student.find({
+    $or: searchAbleQuery.map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  });
+
+  let sort = '-createdAt';
+
+  if (query.sort) {
+    sort = query.sort as string;
+  }
+  const filterQuery = searchQuery
+    .find(queryObject)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -15,6 +39,14 @@ const getAllStudent = async () => {
       },
     });
 
+  const sortQuery = filterQuery.sort(sort);
+
+  let limit = 1;
+  if (query.limit) {
+    limit = query.limit as number;
+  }
+
+  const result = await sortQuery.limit(limit);
   return result;
 };
 
