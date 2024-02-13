@@ -5,13 +5,6 @@ import { AcademicFacultyValidation } from './AcademicFaculty.validation';
 
 const router = express.Router();
 
-router.post(
-  '/create-faculty',
-  AcademicFacultyController.createAcademicFaculty,
-  validataRequest(
-    AcademicFacultyValidation.CreateAcademicFacultyValidationSchema,
-  ),
-);
 router.get('/all-faculty', AcademicFacultyController.AllFaculty);
 router.patch(
   '/update-faculty/:id',

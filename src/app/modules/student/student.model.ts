@@ -124,9 +124,9 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     },
   },
   {
-    toJSON: {
-      virtuals: true,
-    },
+    // toJSON: {
+    //   virtuals: true,
+    // },
   },
 );
 
@@ -160,9 +160,9 @@ studentSchema.statics.isUserExists = async function (id: string) {
 
 //----------------virtual------------------------------------------------------>
 
-studentSchema.virtual('FullName').get(function () {
-  return this.name.firstName + this.name.middleName + this.name.lastName;
-});
+// studentSchema.virtual('FullName').get(function () {
+//   return this.name.firstName + this.name.middleName + this.name.lastName;
+// });
 
 studentSchema.post('save', function (doc, next) {
   this.password = ' ';
