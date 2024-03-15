@@ -33,7 +33,6 @@ export type TFaculty = {
   presentAddress: string;
   permanentAddress: string;
   profileImg?: string;
-  academicDepartment: Types.ObjectId;
   isDeleted: boolean;
 };
 export interface FacultyModel extends Model<TFaculty> {

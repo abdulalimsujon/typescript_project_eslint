@@ -100,8 +100,6 @@ const createAdminIntoDB = async (password: string, payload: TFaculty) => {
 
   userData.password = password || (config.defaultPassword as string);
 
-  console.log(userData);
-
   //set student role
   userData.role = 'admin';
 

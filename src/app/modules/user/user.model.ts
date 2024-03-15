@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { TUser } from './user.interface';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 
 const userSchema = new Schema<TUser>(
   {
@@ -38,16 +38,18 @@ const userSchema = new Schema<TUser>(
 
 // -----------------pre save middleware:hooks-------------------------------->
 
-userSchema.pre('save', async function (next) {
-  // console.log(this, 'pre hook we save our data');
+// userSchema.pre('save', async function (next) {
+//   // console.log(this, 'pre hook we save our data');
 
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this;
+//   // eslint-disable-next-line @typescript-eslint/no-this-alias
+//   const user = this;
 
-  user.password = await bcrypt.hash(user.password, 10);
+//   console.log('dd', user.password);
 
-  next();
-});
+//   user.password = await bcrypt.hash(user.password, 10);
+
+//   next();
+// });
 // do empty string after saving password
 userSchema.post('save', function (doc, next) {
   doc.password = '';

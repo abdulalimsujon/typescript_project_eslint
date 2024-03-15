@@ -42,7 +42,7 @@ const getAllStudent = async (query: Record<string, unknown>) => {
   //     populate: {
   //       path: 'academicFaculty',
   //     },
-  //   });
+  //     });
   // const sortQuery = filterQuery.sort(sort);
   // let page = 1;
   // let skip = 0;

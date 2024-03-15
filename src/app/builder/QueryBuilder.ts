@@ -1,11 +1,12 @@
 import { FilterQuery, Query } from 'mongoose';
 
 class QueryBuilder<T> {
+  // <T> it works for different type of data
   public modelQuery: Query<T[], T>;
   public query: Record<string, unknown>;
 
   constructor(modelQuery: Query<T[], T>, query: Record<string, unknown>) {
-    this.modelQuery = modelQuery;
+    this.modelQuery = modelQuery; // assign the value to the constructer
     this.query = query;
   }
 

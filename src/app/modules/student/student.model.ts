@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import validator from 'validator';
+// import bcrypt from 'bcrypt';
 
 import {
   StudentModel,
@@ -52,11 +53,11 @@ const LocalguardianSchema = new Schema<TLocalGuardian>({
 });
 const studentSchema = new Schema<TStudent, StudentModel>(
   {
-    password: {
-      type: String,
-      // required: [true, 'password is required'],
-      // maxlength: [20, 'not more than 20 characters'],
-    },
+    // password: {
+    //   type: String,
+    //   // required: [true, 'password is required'],
+    //   // maxlength: [20, 'not more than 20 characters'],
+    // },
     user: {
       type: Schema.Types.ObjectId,
       required: [true, 'userId is required'],

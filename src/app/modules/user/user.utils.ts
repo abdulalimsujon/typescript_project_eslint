@@ -40,8 +40,6 @@ export const generatedFacultyId = async () => {
   let currentId: string | any = (0).toString();
 
   const lastFacultyId = await findLastFaculty();
-  console.log(lastFacultyId);
-
   currentId = lastFacultyId?.substring(4);
 
   let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
