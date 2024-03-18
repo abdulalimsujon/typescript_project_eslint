@@ -1,30 +1,24 @@
 import { z } from 'zod';
 import { days } from './offerCourse.const';
 
+const timeStringSChema = z.string().refine(
+  (time) => {
+    const regex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+    return regex.test(time);
+  },
+  {
+    message: 'invalid input : expect hour:min in 24hours formats ',
+  },
+);
+
 const offerCourseValidationSchema = z.object({
   body: z
     .object({
       faculty: z.string(),
       section: z.number(),
       days: z.array(z.enum([...days] as [string, ...string[]])),
-      startTime: z.string().refine(
-        (time) => {
-          const regex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
-          return regex.test(time);
-        },
-        {
-          message: 'invalid input : expect hour:min in 24hours formats ',
-        },
-      ),
-      endTime: z.string().refine(
-        (time) => {
-          const regex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
-          return regex.test(time);
-        },
-        {
-          message: 'invalid input : expect hour:min in 24hours formats ',
-        },
-      ),
+      startTime: timeStringSChema,
+      endTime: timeStringSChema,
     })
     .refine(
       (body) => {
@@ -39,11 +33,10 @@ const offerCourseValidationSchema = z.object({
 });
 const UpdateOfferCourseValidationSchema = z.object({
   body: z.object({
-    faculty: z.string().optional(),
-    section: z.number().optional(),
-    days: z.enum([...days] as [string, ...string[]]).optional(),
-    startTime: z.string().optional(),
-    endTime: z.string().optional(),
+    faculty: z.string(),
+    days: z.array(z.enum([...days] as [string, ...string[]])),
+    startTime: timeStringSChema,
+    endTime: timeStringSChema,
   }),
 });
 

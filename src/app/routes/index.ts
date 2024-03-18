@@ -8,6 +8,8 @@ import { AdminRoutes } from '../modules/admin/admin.route';
 import { AcademicSemesterRegistrationRoute } from '../modules/SemesterRegistration/AcademicSemesterRegistration.routes';
 import { AcademicFacultyRoute } from '../modules/AcademicFaculty/AcademicFaculty.route';
 import { offeredCourse } from '../modules/offeredCourse/offeredCourse.routes';
+import { AuthRoute } from '../modules/Auth/Auth.route';
+import { FacultyRoutes } from '../modules/Faculty/faculty.route';
 
 const router = express.Router();
 
@@ -47,6 +49,14 @@ const moduleRoutes = [
   {
     path: '/academic-semester-registration',
     route: AcademicSemesterRegistrationRoute,
+  },
+  {
+    path: '/auth',
+    route: AuthRoute,
+  },
+  {
+    path: '/faculties',
+    route: FacultyRoutes,
   },
 ];
 
