@@ -16,6 +16,9 @@ const userSchema = new Schema<TUser, UserModel>(
       type: Boolean,
       default: true,
     },
+    PasswordChangeAt: {
+      type: Date,
+    },
     role: {
       type: String,
       enum: ['student', 'faculty', 'admin'],
@@ -69,5 +72,15 @@ userSchema.statics.isPasswordMatched = async function (
   );
 
   return isPasswordMatched;
+};
+
+userSchema.statics.isJWTissuedBeforePasswordChanged = async function (
+  passwordChangeTimeStamps,
+  jwtIssuedTimeStamps,
+) {
+  const passwordChangedTime =
+    new Date(passwordChangeTimeStamps).getTime() / 1000;
+
+  return passwordChangedTime > jwtIssuedTimeStamps;
 };
 export const User = model<TUser, UserModel>('User', userSchema);

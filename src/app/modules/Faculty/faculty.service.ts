@@ -9,10 +9,7 @@ import QueryBuilder from '../../builder/QueryBuilder';
 import { FacultySearchableFields } from './faculty.const';
 
 const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
-  const facultyQuery = new QueryBuilder(
-    Faculty.find().populate('academicDepartment'),
-    query,
-  )
+  const facultyQuery = new QueryBuilder(Faculty.find().populate('user'), query)
     .search(FacultySearchableFields)
     .filter()
     .sort()
