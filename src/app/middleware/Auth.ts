@@ -48,12 +48,6 @@ const Auth = (...RequireRules: TUserRole[]) => {
         iat as number,
       )
     ) {
-      console.log(
-        User.isJWTissuedBeforePasswordChanged(
-          user.PasswordChangeAt,
-          iat as number,
-        ),
-      );
       throw new AppError(httpStatus.UNAUTHORIZED, 'you are not authorize');
     }
     if (RequireRules && !RequireRules.includes(role)) {

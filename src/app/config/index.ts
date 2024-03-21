@@ -10,4 +10,5 @@ export default {
   defaultPassword: process.env.DEFAULT_PASSWORD,
   jwtAcessToken: process.env.JWT_ACCESS_TOKEN,
   sult_round: process.env.SULT_ROUND,
+  refreshAccessToken: process.env.JWT_REFRESH_ACCESS_TOKEN,
 };
