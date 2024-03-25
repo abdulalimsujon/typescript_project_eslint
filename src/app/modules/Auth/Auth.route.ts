@@ -23,4 +23,22 @@ router.post(
   AuthController.refreshToken,
 );
 
+router.post(
+  '/forget-password',
+  validataRequest(AuthenticationValidation.forgetPasswordValidation),
+  AuthController.forgetPassword,
+);
+router.patch(
+  '/reset-password',
+  validataRequest(AuthenticationValidation.resetPasswordValidationSchema),
+  AuthController.resetPassword,
+);
+router.patch(
+  '/change-status/:id',
+  Auth('admin'),
+  validataRequest(AuthenticationValidation.changeStatusValidation),
+  AuthController.changeStatus,
+);
+router.get('/getMe', Auth('student', 'admin', 'faculty'), AuthController.getMe);
+
 export const AuthRoute = router;

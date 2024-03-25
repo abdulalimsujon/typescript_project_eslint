@@ -1,6 +1,6 @@
-import Jwt from 'jsonwebtoken';
+import Jwt, { JwtPayload } from 'jsonwebtoken';
 
-const createToken = (
+export const createToken = (
   JwtPayload: { userId: string; role: string },
   secreate: string,
   expiresIn: string,
@@ -10,4 +10,8 @@ const createToken = (
   });
 };
 
-export default createToken;
+export const verifyToken = (token: string, secreate: string) => {
+  const decode = Jwt.verify(token, secreate) as JwtPayload;
+
+  return decode;
+};
