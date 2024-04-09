@@ -40,11 +40,15 @@ const createStudentIntoDB = async (
 
     userData.id = await generatedStudentId(admissionSemesterInfo);
 
-    const imageName = `${userData.id} ${payload.name.firstName}`;
-    const path = file?.path;
-    const { secure_url } = (await sendImageToCloudinary(imageName, path)) as {
-      secure_url: string;
-    };
+    if (file) {
+      const imageName = `${userData.id} ${payload.name.firstName}`;
+      const path = file?.path;
+      const { secure_url } = (await sendImageToCloudinary(imageName, path)) as {
+        secure_url: string;
+      };
+
+      payload.profileImage = secure_url as string;
+    }
 
     const newUser = await User.create([userData], { session }); // array
 
@@ -53,7 +57,6 @@ const createStudentIntoDB = async (
     }
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
-    payload.profileImage = secure_url ?? '';
 
     const newStudent = await Student.create([payload], { session });
 
@@ -68,6 +71,7 @@ const createStudentIntoDB = async (
   } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
+    console.log(err);
     throw new Error(err);
   }
 };

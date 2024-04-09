@@ -14,7 +14,7 @@ const Auth = (...RequireRules: TUserRole[]) => {
       throw new AppError(httpStatus.UNAUTHORIZED, 'you are not authorize');
     }
 
-    //if  the token is unvalid
+    //if  the token is invalid
 
     const decode = jwt.verify(
       token,

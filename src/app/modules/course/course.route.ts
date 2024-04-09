@@ -36,6 +36,11 @@ router.put(
   CourseControllers.removeFacultyIntoWithCourse,
 );
 
+router.get(
+  '/:id/getCourse-faculties',
+  CourseControllers.getFacultiesWithCourse,
+);
+
 // router.delete(
 //   '/:courseId/remove-faculties',
 //   validataRequest(CourseValidations.facultiesWithCourseValidationSchema),

@@ -29,7 +29,7 @@ const AllSemester = catchAsync(async (req, res) => {
 });
 
 const updatedSemster = catchAsync(async (req, res) => {
-  const id = req.params.studentId;
+  const id = req.params.id;
   const { body } = req.body;
 
   const result = await AcademicSemesterService.updateAcademicSemester(id, body);

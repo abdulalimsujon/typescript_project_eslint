@@ -25,7 +25,9 @@ const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
     .fields();
 
   const result = await courseQuery.modelQuery;
-  return result;
+  const meta = await courseQuery.countTotal();
+
+  return { result, meta };
 };
 
 const getSingleCourseFromDB = async (id: string) => {
@@ -159,7 +161,16 @@ const removeFacultiesWithCourseIntoDB = async (
   return result;
 };
 
+const getFacultiesWithCourse = async (id: string) => {
+  const result = await CourseFaculty.findOne({ course: id }).populate(
+    'faculties',
+  );
+
+  return result;
+};
+
 export const CourseServices = {
+  getFacultiesWithCourse,
   removeFacultiesWithCourseIntoDB,
   createCourseIntoDB,
   getAllCoursesFromDB,
